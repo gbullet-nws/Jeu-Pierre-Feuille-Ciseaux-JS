@@ -16,7 +16,7 @@
 
         <main>
 
-            <div> <!-- Boutons de choix de l'action -->
+            <section> <!-- Boutons de choix de l'action -->
                 </br>
 
                 <div>
@@ -24,26 +24,32 @@
                     <button class="boutonChoix" id="boutonFeuille"> Feuille </button>
                     <button class="boutonChoix" id="boutonCiseaux"> Ciseaux </button>
                 </div> 
+
                     </br> </br>
+
                 <div>
                     <h3> --- Actions --- </h3>
                     <p id="actionJOUEUR"> - Action du Joueur :  </p>
                     <p id="actionIA"> - Action de l' I.A : </p>
                     <h3> *** Résultat *** </h3>
-                    <p id="zoneResultat"> Résultat de la manche </p>
+                    <p id="ZoneResultat"> Résultat de la manche </p>
                 </div>
+
                     </br>
+
                 <div> 
                     <h3> Victoire en 3 manches gagnantes : </h3>
                     <p id="points_JOUEUR"> Points du Joueur : </p>
                     <p id="points_IA"> Points de l' I.A : </p>
-                    <h4> Victoire de : ... </h4>
+                    <h4 id="ZoneVictoire"> Victoire de : ... </h4>
                 </div>
 
-                </br> </br>
-                <p id="testeeeuu"> TEST </p>
+                <div> </br> </br>
+                    <!-- Bouton de reload de la page -->
+                    <input type="button" onclick= 'window.location.reload(false)' value="Relancer"/>
+                </div>
 
-            </div>
+            </section>
 
         </main>
 
@@ -55,84 +61,135 @@
 
             ////// JEU === Pierre Feuille Ciseaux ////// 
 
-                /* la constante BUTTONS contient les 3 boutons avec la class="boutonChoix" */
-                const BOUTONS = document.querySelectorAll("button.boutonChoix");
-                 console.log(BOUTONS);
+            /* la constante BOUTONS contient les 3 boutons avec la class="boutonChoix" */
+            const BOUTONS = document.querySelectorAll("button.boutonChoix");
+            console.log(BOUTONS);
 
-                /* ( déclaration du compteur de boutons ; compteur plus petit que le nombre de boutons ; compteur augmente */
-                 for(let i = 0; i < BOUTONS.length; i++)
-                {
-                    /* pour chaque bouton du compteur, on écoute l'Event "click", auquel on attache une fonction */
-                    BOUTONS[i].addEventListener("click", function() 
+            let pointsDuJoueur = 0;
+            let pointsDeIA = 0;
+
+            /* ( déclaration du compteur de boutons ; compteur plus petit que le nombre de boutons ; compteur augmente */
+                for(let i = 0; i < BOUTONS.length; i++)
+            {
+                /* pour chaque bouton du compteur, on écoute l'Event "click", auquel on attache une fonction */
+                BOUTONS[i].addEventListener("click", function() 
+                {   
+                    /* initialisation des constantes JOUEUR et IA */
+                    const JOUEUR = BOUTONS[i].innerHTML;
+                    const IA = BOUTONS[Math.floor(Math.random() * BOUTONS.length)].innerHTML;
+
+                    /* Affichage des actions du Joueur et de l'IA */
+                    actionJOUEUR.innerHTML = "- Action du Joueur :" + JOUEUR;
+                    actionIA.innerHTML = "- Action de l' I.A : " + IA;
+
+                    /* variable qui va remplacer le HTML de id="zoneResultat" */
+                    //let resultat = "";
+
+                    /* conditions de victoire, égalité ou défaite */ 
+                    /* attention aux espace dans les boutons HTML pour l'égalité stricte ("Ciseaux" != " Ciseaux ")*/
+                    if ((JOUEUR == " Pierre " && IA == " Ciseaux ") || 
+                        (JOUEUR == " Feuille " && IA == " Pierre ") ||
+                        (JOUEUR == " Ciseaux " && IA == " Feuille "))
                     {
-                        const JOUEUR = BOUTONS[i].innerHTML;
-                        const IA = BOUTONS[Math.floor(Math.random() * BOUTONS.length)].innerHTML;
-                        // console.log(`Joueur : ${JOUEUR} VS Intelligence Artificielle : ${IA}`); 
-
-                        /* Affichage des actions du Joueur et de l'IA */
-                        actionJOUEUR.innerHTML = "- Action du Joueur :" + JOUEUR;
-                        actionIA.innerHTML = "- Action de l' I.A : " + IA;
-
-                        /* variable qui va remplacer le HTML de id="zoneResultat" */
-                        let resultat = "";
-
-                        /* conditions de victoire, égalité ou défaite */ 
-                        /* attention aux espace dans les boutons HTML pour l'égalité stricte ("Ciseaux" != " Ciseaux ")*/
-                        if ((JOUEUR == " Pierre " && IA == " Ciseaux ") || 
-                            (JOUEUR == " Feuille " && IA == " Pierre ") ||
-                            (JOUEUR == " Ciseaux " && IA == " Feuille "))
-                        {
-                            resultat = " Gagné ! ";
-                        }
-                        else if (JOUEUR === IA )
-                        {
-                            resultat = " Égalité... ";
-                        }
-                        else
-                        {
-                            resultat = " Perdu ! ";
-                        }
-                        
-                        /* remplacement du HTML de id="zoneResultat" */
-                        document.getElementById("zoneResultat").innerHTML = resultat;
-
-                        // Gagné ne fonctionne pas
-                        // zoneResultat.innerHTML = resultat;
-
-                        console.log(`Joueur : ${JOUEUR} VS Intelligence Artificielle : ${IA}`);
-                        console.log(resultat);
-                    });
-                }
-                
-                let pointsJoueur = 0;
-                let pointsIA = 0;
-
-                compteurDePoints();
-
-                function compteurDePoints()
-                {
-                    if(resultat = " Gagné ! ")
-                    {
-                        pointsJoueur + 1;
-                        points_JOUEUR.innerHTML = "Points du Joueur : " + pointsJoueur;
-                        console.log(pointsJoueur);
+                        resultat = " Gagné ! ";
                     }
-                    else if(resultat = " Perdu ! ")
+                    else if (JOUEUR === IA )
                     {
-                        pointsIA + 1;
-                        points_IA.innerHTML = "Points de l' I.A : " + pointsIA;
-                        console.log(points_IA);
+                        resultat = " Égalité... ";
                     }
+                    else
+                    {
+                        resultat = " Perdu ! ";
+                    }
+                    
+                    /* remplacement du HTML de id="zoneResultat" */
+                    document.getElementById("ZoneResultat").innerHTML = resultat;
+                    /* ne fonctionne pas */
+                    // zoneResultat.innerHTML = resultat;
 
+                    console.log(`Joueur : ${JOUEUR} VS Intelligence Artificielle : ${IA}`);
+                    console.log(resultat);
+
+                    compteurDePoints(resultat);
+
+                    console.log("\n Compteur de points :");
+                    console.log(pointsDuJoueur);
+                    console.log(pointsDeIA);
+
+                    victoireFinPartie(pointsDuJoueur, pointsDeIA);
+
+                });
+
+            }
+
+            function compteurDePoints()
+            {
+                let pointsJoueur = pointsDuJoueur;
+                let pointsIA = pointsDeIA;
+
+                if(resultat == " Gagné ! ")
+                {
+                    pointsJoueur = pointsJoueur + 1;
+                    //console.log(pointsJoueur);
+                    pointsDuJoueur = pointsJoueur;
+
+                    points_JOUEUR.innerHTML = "Points du Joueur : " + pointsDuJoueur;
+                    //document.getElementById("points_JOUEUR").innerHTML = "Points du Joueur : " + pointsDuJoueur;
+                    console.log("Joueur : " + pointsDuJoueur);
                 }
+                else if(resultat == " Perdu ! ")
+                {
+                    pointsIA = pointsIA + 1;
+                    //console.log(pointsIA);
+                    pointsDeIA = pointsIA;
+
+                    points_IA.innerHTML = "Points de l' I.A : " + pointsDeIA;
+                    //document.getElementById("points_IA").innerHTML = "Points de l' I.A : " + pointsDeIA;
+                    console.log("IA : " + pointsDeIA);
+                }
+                else
+                {
+                    points_JOUEUR.innerHTML = "Points du Joueur : " + pointsDuJoueur;
+                    points_IA.innerHTML = "Points de l' I.A : " + pointsDeIA;
+                }
+
+                document.getElementById("points_IA").innerHTML = "Points de l' I.A : " + pointsDeIA;
+            }
+
+
+            function victoireFinPartie()
+            {
+                pointsTotauxJoueur = pointsDuJoueur ;
+                pointsTotauxIA = pointsDeIA ;
+
+                if( pointsTotauxJoueur >= 3 )
+                {
+                    document.getElementById("ZoneVictoire").innerHTML = " Victoire du Joueur ! "
+                }
+                else if( pointsTotauxIA >= 3 )
+                {
+                    document.getElementById("ZoneVictoire").innerHTML = " Victoire de l' I.A ... "
+                }
+                else
+                {
+                    document.getElementById("ZoneVictoire").innerHTML = " Victoire de : ... "
+                }
+            }
+
+           // function stopperJeu()
+           // {
+           //     if()
+           // }
 
 
         </script>
+
 
         <script>
 
-
         </script>
+
+
         
     </body>
 
