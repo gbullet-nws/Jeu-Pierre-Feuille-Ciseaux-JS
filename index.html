@@ -118,6 +118,8 @@
 
                     victoireFinPartie(pointsDuJoueur, pointsDeIA);
 
+                    relancerJeu()
+
                 });
 
             }
@@ -165,10 +167,14 @@
                 if( pointsTotauxJoueur >= 3 )
                 {
                     document.getElementById("ZoneVictoire").innerHTML = " Victoire du Joueur ! "
+                    let scoreFinalJoueur = pointsDuJoueur;
+                    let scoreFinalIA = pointsDeIA;
                 }
                 else if( pointsTotauxIA >= 3 )
                 {
                     document.getElementById("ZoneVictoire").innerHTML = " Victoire de l' I.A ... "
+                    let scoreFinalJoueur = pointsDuJoueur;
+                    let scoreFinalIA = pointsDeIA;
                 }
                 else
                 {
@@ -176,10 +182,20 @@
                 }
             }
 
-           // function stopperJeu()
-           // {
-           //     if()
-           // }
+            function relancerJeu()
+            {
+
+                if(pointsDuJoueur >= 4 || pointsDeIA >= 4)
+                {
+                    location.reload(true);
+                }
+                else if(pointsTotauxJoueur <= 3 || pointsTotauxIA <= 3)
+                {
+                    document.getElementsByCLassName("boutonChoix").style.display = none;
+                }
+                document.getElementsByCLassName("boutonChoix").style.display = none;
+            }
+
 
 
         </script>
