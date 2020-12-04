@@ -19,7 +19,7 @@
             <section> <!-- Boutons de choix de l'action -->
                 </br>
 
-                <div>
+                <div id="boutonsChoixActions">
                     <button class="boutonChoix" id="boutonPierre"> Pierre </button>
                     <button class="boutonChoix" id="boutonFeuille"> Feuille </button>
                     <button class="boutonChoix" id="boutonCiseaux"> Ciseaux </button>
@@ -118,7 +118,9 @@
 
                     victoireFinPartie(pointsDuJoueur, pointsDeIA);
 
-                    relancerJeu()
+                    arreterJeu();
+
+                    relancerJeu();
 
                 });
 
@@ -158,11 +160,10 @@
                 document.getElementById("points_IA").innerHTML = "Points de l' I.A : " + pointsDeIA;
             }
 
-
             function victoireFinPartie()
             {
-                pointsTotauxJoueur = pointsDuJoueur ;
-                pointsTotauxIA = pointsDeIA ;
+                let pointsTotauxJoueur = pointsDuJoueur ;
+                let pointsTotauxIA = pointsDeIA ;
 
                 if( pointsTotauxJoueur >= 3 )
                 {
@@ -182,26 +183,24 @@
                 }
             }
 
+            function arreterJeu()
+            {
+                if(pointsDuJoueur >= 3 || pointsDeIA >= 3)
+                {
+                    document.getElementById("boutonsChoixActions").style.display = "none";
+                }
+            }
+
             function relancerJeu()
             {
+                let pointsFinPartieJoueur = pointsDuJoueur ;
+                let pointsFinPartieIA= pointsDeIA ;
 
-                if(pointsDuJoueur >= 4 || pointsDeIA >= 4)
+                if(pointsDuJoueur >= 4 || pointsDeIA  >= 4)
                 {
                     location.reload(true);
                 }
-                else if(pointsTotauxJoueur <= 3 || pointsTotauxIA <= 3)
-                {
-                    document.getElementsByCLassName("boutonChoix").style.display = none;
-                }
-                document.getElementsByCLassName("boutonChoix").style.display = none;
             }
-
-
-
-        </script>
-
-
-        <script>
 
         </script>
 
